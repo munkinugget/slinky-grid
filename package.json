@@ -1,0 +1,29 @@
+{
+  "name": "slinky-grid",
+  "version": "1.0.0",
+  "description": "A very flexible...flex grid system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/munkinugget/slinky-grid.git"
+  },
+  "keywords": [
+    "sass",
+    "css",
+    "flexbox"
+  ],
+  "author": "Matthew Cavanaugh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/munkinugget/slinky-grid/issues"
+  },
+  "homepage": "https://github.com/munkinugget/slinky-grid#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.0.0",
+    "gulp-sass": "^3.1.0"
+  }
+}
