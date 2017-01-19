@@ -1,3 +1,22 @@
+/*
+syntax?
+
+col
+  required base class
+
+[break]-[columns] (ex. xs-12)
+  indicates a fixed base size
+
+gte-[break]-[columns] (ex. gte-xs-12)
+  indicates that this element should be larger then or equal to
+  the specified number of columns
+
+lte-[break]-[columns] (ex. lte-xs-12)
+  indicates that this element should be smaller then or equal to
+  the specified number of columns
+
+*/
+
 $grid-debug: true;
 $grid-columns: 12 !default;
 $grid-columns-relative: 16 !default;
