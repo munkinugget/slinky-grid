@@ -84,7 +84,7 @@ body {
       width: floor(($grid-gutter-width / 2));
       background-color: rgba(255, 0, 0, .2);
     }
-    
+
     &:after{
       position: absolute;
       display: block;
@@ -138,58 +138,78 @@ body {
       margin-left: $i / $grid-columns * 100%;
     }
   }
+}
 
-  .grow-#{$breakpoint}{
-    flex-grow: 1;
-    flex-shrink: 0;
+@mixin col-modifiers($breakpoint) {
+  .#{$syntax-col} {
+    &.grow-#{$breakpoint}{
+      flex-grow: 1;
+      flex-shrink: 0;
+    }
+
+    &.shrink-#{$breakpoint}{
+      flex-grow: 0;
+      flex-shrink: 1;
+    }
+
+    &.first-#{$breakpoint} {
+      order: -1;
+    }
+
+    &.last-#{$breakpoint} {
+      order: 1;
+    }
   }
+}
 
-  .shrink-#{$breakpoint}{
-    flex-grow: 0;
-    flex-shrink: 1;
-  }
+@mixin row-modifiers($breakpoint) {
+  .#{$syntax-row} {
+    .start-#{$breakpoint}{
+      justify-content: flex-start;
+      text-align: start;
+    }
 
-  .start-#{$breakpoint}{
-    justify-content: flex-start;
-    text-align: start;
-  }
+    .center-#{$breakpoint} {
+      justify-content: center;
+      text-align: center;
+    }
 
-  .center-#{$breakpoint} {
-    justify-content: center;
-    text-align: center;
-  }
+    .end-#{$breakpoint} {
+      justify-content: flex-end;
+      text-align: end;
+    }
 
-  .end-#{$breakpoint} {
-    justify-content: flex-end;
-    text-align: end;
-  }
+    .top-#{$breakpoint} {
+      align-items: flex-start;
+    }
 
-  .top-#{$breakpoint} {
-    align-items: flex-start;
-  }
+    .middle-#{$breakpoint} {
+      align-items: center;
+    }
 
-  .middle-#{$breakpoint} {
-    align-items: center;
-  }
+    .bottom-#{$breakpoint} {
+      align-items: flex-end;
+    }
 
-  .bottom-#{$breakpoint} {
-    align-items: flex-end;
-  }
+    .around-#{$breakpoint} {
+      justify-content: space-around;
+    }
 
-  .around-#{$breakpoint} {
-    justify-content: space-around;
-  }
+    .between-#{$breakpoint} {
+      justify-content: space-between;
+    }
 
-  .between-#{$breakpoint} {
-    justify-content: space-between;
-  }
+    .reverse-#{$breakpoint} {
+      flex-direction: row-reverse;
+    }
 
-  .first-#{$breakpoint} {
-    order: -1;
-  }
+    .column-#{$breakpoint} {
+      flex-direction: column;
+    }
 
-  .last-#{$breakpoint} {
-    order: 1;
+    .column-reverse-#{$breakpoint} {
+      flex-direction: column-reverse;
+    }
   }
 }
 
@@ -214,21 +234,29 @@ body {
 @include base-col(xs);
 @include gte-col(xs);
 @include lte-col(xs);
+@include col-modifiers(xs);
+@include row-modifiers(xs);
 
 @media (min-width: $screen-sm-min) {
   @include base-col(sm);
   @include gte-col(sm);
   @include lte-col(sm);
+  @include col-modifiers(sm);
+  @include row-modifiers(sm);
 }
 
 @media (min-width: $screen-md-min) {
   @include base-col(md);
   @include gte-col(md);
   @include lte-col(md);
+  @include col-modifiers(md);
+  @include row-modifiers(md);
 }
 
 @media (min-width: $screen-lg-min) {
   @include base-col(lg);
   @include gte-col(lg);
   @include lte-col(lg);
+  @include col-modifiers(lg);
+  @include row-modifiers(lg);
 }
