@@ -36,13 +36,14 @@ $screen-md-min: 992px !default;
 // Large screen / wide desktop
 $screen-lg-min: 1200px !default;
 
-$syntax-container: 'container';
-$syntax-container-fluid: 'container-fluid';
-$syntax-row:    'row';
-$syntax-col:    'col';
-$syntax-offset: 'offset';
-$syntax-gte:    'gte';
-$syntax-lte:    'lte';
+// Allow syntax customization, probably going to move this to a map/function...
+$syntax-container:        'container';
+$syntax-container-fluid:  'container-fluid';
+$syntax-row:              'row';
+$syntax-col:              'col';
+$syntax-offset:           'offset';
+$syntax-gte:              'gte';
+$syntax-lte:              'lte';
 
 body {
   padding: 0;
@@ -69,6 +70,7 @@ body {
   margin-left:  floor(($grid-gutter-width / -2));
   margin-right: ceil(($grid-gutter-width / -2));
 
+  // Applies styles to the grid elements if debug is active
   @if $grid-debug-mode {
     position: relative;
 
@@ -110,6 +112,7 @@ body {
   padding-left:  floor(($grid-gutter-width / 2));
   padding-right: ceil(($grid-gutter-width / 2));
 
+  // Applies styles to the grid elements if debug is active
   @if $grid-debug-mode {
     min-height: 3em;
     margin-bottom: 1em;
@@ -128,6 +131,7 @@ body {
   }
 }
 
+// Apply the base column class
 @mixin base-col($breakpoint) {
   @for $i from 1 through $grid-columns {
     .#{$breakpoint}-#{$i} {
@@ -140,79 +144,7 @@ body {
   }
 }
 
-@mixin col-modifiers($breakpoint) {
-  .#{$syntax-col} {
-    &.grow-#{$breakpoint}{
-      flex-grow: 1;
-      flex-shrink: 0;
-    }
-
-    &.shrink-#{$breakpoint}{
-      flex-grow: 0;
-      flex-shrink: 1;
-    }
-
-    &.first-#{$breakpoint} {
-      order: -1;
-    }
-
-    &.last-#{$breakpoint} {
-      order: 1;
-    }
-  }
-}
-
-@mixin row-modifiers($breakpoint) {
-  .#{$syntax-row} {
-    .start-#{$breakpoint}{
-      justify-content: flex-start;
-      text-align: start;
-    }
-
-    .center-#{$breakpoint} {
-      justify-content: center;
-      text-align: center;
-    }
-
-    .end-#{$breakpoint} {
-      justify-content: flex-end;
-      text-align: end;
-    }
-
-    .top-#{$breakpoint} {
-      align-items: flex-start;
-    }
-
-    .middle-#{$breakpoint} {
-      align-items: center;
-    }
-
-    .bottom-#{$breakpoint} {
-      align-items: flex-end;
-    }
-
-    .around-#{$breakpoint} {
-      justify-content: space-around;
-    }
-
-    .between-#{$breakpoint} {
-      justify-content: space-between;
-    }
-
-    .reverse-#{$breakpoint} {
-      flex-direction: row-reverse;
-    }
-
-    .column-#{$breakpoint} {
-      flex-direction: column;
-    }
-
-    .column-reverse-#{$breakpoint} {
-      flex-direction: column-reverse;
-    }
-  }
-}
-
+// Apply the greater then or equal to column class
 @mixin gte-col($breakpoint) {
   @for $i from 1 through $grid-columns {
     .#{$breakpoint}-#{$syntax-gte}-#{$i} {
@@ -222,6 +154,7 @@ body {
   }
 }
 
+// Apply the less then or equal to column class
 @mixin lte-col($breakpoint) {
   @for $i from 1 through $grid-columns {
     .#{$breakpoint}-#{$syntax-lte}-#{$i} {
@@ -231,32 +164,140 @@ body {
   }
 }
 
-@include base-col(xs);
-@include gte-col(xs);
-@include lte-col(xs);
-@include col-modifiers(xs);
-@include row-modifiers(xs);
+// Column modifiers effect column layout individually 
+@mixin col-modifiers($breakpoint) {
+  .#{$syntax-col} {
+    // Element should grow to the maximum available space
+    // along the main axis
+    &.grow-#{$breakpoint}{
+      flex-grow: 1;
+      flex-shrink: 0;
+    }
+
+    // Element should shrink to the manimum available space
+    // along the main axis
+    &.shrink-#{$breakpoint}{
+      flex-grow: 0;
+      flex-shrink: 1;
+    }
+
+    // Element should jump to the first position in the main axis
+    &.first-#{$breakpoint} {
+      order: -1;
+    }
+
+    // Element should jump to the last position in the main axis
+    &.last-#{$breakpoint} {
+      order: 1;
+    }
+  }
+}
+
+// Row modifiers effect child elements
+@mixin row-modifiers($breakpoint) {
+  .#{$syntax-row} {
+    // Justify child elements to the start of the main axis
+    // |<[]       |
+    .justify-start-#{$breakpoint}{
+      justify-content: flex-start;
+      text-align: start;
+    }
+
+    // Justify child elements to the center of the main axis
+    // |   >[]<   |
+    .justify-center-#{$breakpoint} {
+      justify-content: center;
+      text-align: center;
+    }
+
+    // Justify child elements to the end of the main axis
+    // |      []>|
+    .justify-end-#{$breakpoint} {
+      justify-content: flex-end;
+      text-align: end;
+    }
+
+    // Justify child elements, leaving equal space between
+    // them and the start and end of the main axis
+    // | [] [] [] |
+    .justify-around-#{$breakpoint} {
+      justify-content: space-around;
+    }
+
+    // Justify child elements, leaving equal space between
+    // |[]  []  []|
+    .justify-between-#{$breakpoint} {
+      justify-content: space-between;
+    }
+
+    // ALIGNMENT
+
+    // Align child elements to the top of the cross axis
+    // | [] |
+    // |    |
+    // |    |
+    .align-top-#{$breakpoint} {
+      align-items: flex-start;
+    }
+
+    // Align child elements to the middle of the cross axis
+    // |    |
+    // | [] |
+    // |    |
+    .align-middle-#{$breakpoint} {
+      align-items: center;
+    }
+
+    // Align child elements to the bottom of the cross axis
+    // |    |
+    // |    |
+    // | [] |
+    .align-bottom-#{$breakpoint} {
+      align-items: flex-end;
+    }
+
+    // Reverse the order of child elements along the main axis
+    // [3,2,1,0]
+    .reverse-#{$breakpoint} {
+      flex-direction: row-reverse;
+    }
+
+    // One child element per row!
+    // [ 1 ]
+    // [ 2 ]
+    // [ 3 ]
+    .columnize-#{$breakpoint} {
+      flex-direction: column;
+    }
+
+    // One child element per row! In reverse!
+    // [ 3 ]
+    // [ 2 ]
+    // [ 1 ]
+    .columnize-reverse-#{$breakpoint} {
+      flex-direction: column-reverse;
+    }
+  }
+}
+
+@mixin make-all-col($breakpoint) {
+  @include base-col($breakpoint);
+  @include gte-col($breakpoint);
+  @include lte-col($breakpoint);
+  @include col-modifiers($breakpoint);
+  @include row-modifiers($breakpoint);
+}
+
+@include make-all-col(xs);
 
 @media (min-width: $screen-sm-min) {
-  @include base-col(sm);
-  @include gte-col(sm);
-  @include lte-col(sm);
-  @include col-modifiers(sm);
-  @include row-modifiers(sm);
+  @include make-all-col(sm);
 }
 
 @media (min-width: $screen-md-min) {
-  @include base-col(md);
-  @include gte-col(md);
-  @include lte-col(md);
-  @include col-modifiers(md);
-  @include row-modifiers(md);
+  @include make-all-col(md);
 }
 
 @media (min-width: $screen-lg-min) {
-  @include base-col(lg);
-  @include gte-col(lg);
-  @include lte-col(lg);
-  @include col-modifiers(lg);
-  @include row-modifiers(lg);
+  @include make-all-col(lg);
 }

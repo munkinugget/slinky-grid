@@ -21,7 +21,7 @@ gulp.task('html:watch', function () {
 
 gulp.task('style', function () {
   gulp.src('scss/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass({precision: 8}).on('error', sass.logError))
     .pipe(gulp.dest('.tmp/css/'))
     .pipe(connect.reload());
 });
