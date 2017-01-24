@@ -1,0 +1,36 @@
+.box {
+  min-height: 3em;
+  padding: 1em 1em 0 1em;
+  margin-bottom: 1em;
+  background-color: rgba(3, 169, 244, .2);
+}
+
+/* .#{$syntax-row} {
+  position: relative;
+
+  &:before{
+    position: absolute;
+    display: block;
+    content: '';
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: floor(($grid-gutter-width / 2));
+    background-color: rgba(244, 67, 54, .2);
+  }
+
+  &:after{
+    position: absolute;
+    display: block;
+    content: '';
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    width: ceil(($grid-gutter-width / 2));
+    background-color: rgba(244, 67, 54, .2);
+  }
+} */
