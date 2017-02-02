@@ -1,6 +1,7 @@
 var gulp 		= require('gulp'),
     sass 		= require('gulp-sass'),
-    connect = require('gulp-connect');
+    connect = require('gulp-connect'),
+    del     = require('del');
 
 gulp.task('connect', function() {
   connect.server({
@@ -30,5 +31,10 @@ gulp.task('style:watch', function () {
   gulp.watch('scss/**/*.scss', ['style']);
 });
 
-gulp.task('default', ['style', 'connect', 'html:watch', 'style:watch']);
-gulp.task('test', ['copy']);
+gulp.task('clean', function() {
+  return del([
+    '.tmp'
+  ]);
+});
+
+gulp.task('default', ['clean', 'html', 'style', 'connect', 'html:watch', 'style:watch']);
