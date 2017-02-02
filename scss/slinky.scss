@@ -45,6 +45,11 @@ lte-[break]-[columns] (ex. lte-xs-12)
   margin-right: ceil(($grid-gutter-width / -2));
 }
 
+/*
+  Add row columns? .row .xs-4 ?
+  Would effect child items to make grid layouts easier to manage.
+*/
+
 .#{$syntax-col} {
   box-sizing: border-box;
 
