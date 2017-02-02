@@ -1,0 +1,204 @@
+// Apply the base column class
+@mixin base-col($breakpoint) {
+  .#{$breakpoint} {
+    flex-grow: 1;
+    flex-basis: 0;
+    max-width: 100%;
+  }
+
+  @for $i from 1 through $grid-columns {
+    .#{$breakpoint}-#{$i} {
+      flex-basis: $i / $grid-columns * 100%;
+    }
+
+    .#{$breakpoint}-#{$syntax-offset}-#{$i} {
+      margin-left: $i / $grid-columns * 100%;
+    }
+  }
+}
+
+// Apply the greater then or equal to column class
+@mixin gte-col($breakpoint) {
+  @for $i from 1 through $grid-columns {
+    .#{$breakpoint}-#{$syntax-gte}-#{$i} {
+      flex-grow: 1;
+      min-width: $i / $grid-columns * 100%;
+    }
+  }
+}
+
+// Apply the less then or equal to column class
+@mixin lte-col($breakpoint) {
+  @for $i from 1 through $grid-columns {
+    .#{$breakpoint}-#{$syntax-lte}-#{$i} {
+      flex-shrink: 1;
+      max-width: $i / $grid-columns * 100%;
+    }
+  }
+}
+
+// Column modifiers effect column layout individually
+@mixin col-modifiers($breakpoint) {
+  .#{$syntax-col} {
+    // Element should grow to the maximum available space
+    // along the main axis
+    &.grow-#{$breakpoint}{
+      flex-grow: 1;
+      flex-shrink: 0;
+    }
+
+    // Element should shrink to the manimum available space
+    // along the main axis
+    &.shrink-#{$breakpoint}{
+      flex-grow: 0;
+      flex-shrink: 1;
+    }
+
+    // Element should jump to the first position in the main axis
+    &.first-#{$breakpoint} {
+      order: -1;
+    }
+
+    // Element should jump to the last position in the main axis
+    &.last-#{$breakpoint} {
+      order: 1;
+    }
+
+    // ALIGNMENT
+
+    // Align element to the top of the cross axis
+    // | [] |
+    // |    |
+    // |    |
+    &.align-top-#{$breakpoint} {
+      align-self: flex-start;
+    }
+
+    // Align element to the middle of the cross axis
+    // |    |
+    // | [] |
+    // |    |
+    &.align-middle-#{$breakpoint} {
+      align-self: center;
+    }
+
+    // Align element to the bottom of the cross axis
+    // |    |
+    // |    |
+    // | [] |
+    &.align-bottom-#{$breakpoint} {
+      align-self: flex-end;
+    }
+
+    // Element height streched to the cross axis
+    // | [] |
+    // | [] |
+    // | [] |
+    &.align-stretch-#{$breakpoint} {
+      align-self: stretch;
+    }
+  }
+}
+
+// Row modifiers effect child elements
+@mixin row-modifiers($breakpoint) {
+  .#{$syntax-row} {
+    // Justify child elements to the start of the main axis
+    // |<[]       |
+    &.justify-start-#{$breakpoint}{
+      justify-content: flex-start;
+      text-align: start;
+    }
+
+    // Justify child elements to the center of the main axis
+    // |   >[]<   |
+    &.justify-center-#{$breakpoint} {
+      justify-content: center;
+      text-align: center;
+    }
+
+    // Justify child elements to the end of the main axis
+    // |      []>|
+    &.justify-end-#{$breakpoint} {
+      justify-content: flex-end;
+      text-align: end;
+    }
+
+    // Justify child elements, leaving equal space between
+    // them and the start and end of the main axis
+    // | [] [] [] |
+    &.justify-around-#{$breakpoint} {
+      justify-content: space-around;
+    }
+
+    // Justify child elements, leaving equal space between
+    // |[]  []  []|
+    &.justify-between-#{$breakpoint} {
+      justify-content: space-between;
+    }
+
+    // ALIGNMENT
+
+    // Align child elements to the top of the cross axis
+    // | [] |
+    // |    |
+    // |    |
+    &.align-top-#{$breakpoint} {
+      align-items: flex-start;
+    }
+
+    // Align child elements to the middle of the cross axis
+    // |    |
+    // | [] |
+    // |    |
+    &.align-middle-#{$breakpoint} {
+      align-items: center;
+    }
+
+    // Align child elements to the bottom of the cross axis
+    // |    |
+    // |    |
+    // | [] |
+    &.align-bottom-#{$breakpoint} {
+      align-items: flex-end;
+    }
+
+    // Child elements height streched to the cross axis
+    // | [] |
+    // | [] |
+    // | [] |
+    &.align-stretch-#{$breakpoint} {
+      align-items: stretch;
+    }
+
+    // Reverse the order of child elements along the main axis
+    // [3,2,1,0]
+    &.reverse-#{$breakpoint} {
+      flex-direction: row-reverse;
+    }
+
+    // One child element per row!
+    // [ 1 ]
+    // [ 2 ]
+    // [ 3 ]
+    &.columnize-#{$breakpoint} {
+      flex-direction: column;
+    }
+
+    // One child element per row! In reverse!
+    // [ 3 ]
+    // [ 2 ]
+    // [ 1 ]
+    &.columnize-reverse-#{$breakpoint} {
+      flex-direction: column-reverse;
+    }
+  }
+}
+
+@mixin make-all-col($breakpoint) {
+  @include base-col($breakpoint);
+  @include gte-col($breakpoint);
+  @include lte-col($breakpoint);
+  @include col-modifiers($breakpoint);
+  @include row-modifiers($breakpoint);
+}

@@ -1,0 +1,25 @@
+$grid-columns: 12 !default;
+
+$grid-gutter-width: 2rem !default;
+$grid-outer-margin: floor($grid-gutter-width / 2) !default;
+
+// Extra small screen / phone
+$screen-xs-min: 30rem !default; //480px @16px font
+
+// Small screen / tablet
+$screen-sm-min: 48rem !default; //768px @16px font
+
+// Medium screen / desktop
+$screen-md-min: 64rem !default; //1024px @16px font
+
+// Large screen / wide desktop
+$screen-lg-min: 75rem !default; //1200px @16px font
+
+// Allow syntax customization, probably going to move this to a map/function...
+$syntax-container:        'container' !default;
+$syntax-container-fluid:  'container-fluid' !default;
+$syntax-row:              'row' !default;
+$syntax-col:              'col' !default;
+$syntax-offset:           'offset' !default;
+$syntax-gte:              'gte' !default;
+$syntax-lte:              'lte' !default;
