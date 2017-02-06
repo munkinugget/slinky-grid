@@ -3,32 +3,32 @@ var gulp 		= require('gulp'),
     connect = require('gulp-connect'),
     del     = require('del');
 
-gulp.task('connect', function() {
-  connect.server({
+gulp.task('connect', ['clean'], function() {
+  return connect.server({
     root: '.tmp',
     livereload: true
   });
 });
 
-gulp.task('html', function () {
-  gulp.src('*.html')
+gulp.task('html', ['clean'], function () {
+  return gulp.src('index.html')
     .pipe(gulp.dest('.tmp/'))
     .pipe(connect.reload());
 });
 
-gulp.task('html:watch', function () {
-  gulp.watch(['*.html'], ['html']);
+gulp.task('html:watch', ['clean', 'html'], function () {
+  return gulp.watch(['index.html'], ['html']);
 });
 
-gulp.task('style', function () {
-  gulp.src('scss/**/*.scss')
+gulp.task('style', ['clean'], function () {
+  return gulp.src('scss/**/*.scss')
     .pipe(sass({precision: 8}).on('error', sass.logError))
     .pipe(gulp.dest('.tmp/css/'))
     .pipe(connect.reload());
 });
 
-gulp.task('style:watch', function () {
-  gulp.watch('scss/**/*.scss', ['style']);
+gulp.task('style:watch', ['clean', 'style'], function () {
+  return gulp.watch('scss/**/*.scss', ['style']);
 });
 
 gulp.task('clean', function() {
@@ -37,4 +37,6 @@ gulp.task('clean', function() {
   ]);
 });
 
-gulp.task('default', ['clean', 'html', 'style', 'connect', 'html:watch', 'style:watch']);
+gulp.task('build', ['html', 'style', 'html:watch', 'style:watch', 'connect']);
+
+gulp.task('default', ['build']);
